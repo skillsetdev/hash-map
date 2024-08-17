@@ -40,7 +40,7 @@ export default class Bucket {
   }
   tail() {
     let tmp = this.headNode;
-    while (tmp.nextNode !== null) {
+    while (tmp !== null) {
       tmp = tmp.nextNode;
     }
     return tmp;
@@ -54,9 +54,9 @@ export default class Bucket {
     return tmp;
   }
   containsKey(key) {
-    if (this.headNode === null) return false;
     let tmp = this.headNode;
-    while (tmp.nextNode !== null) {
+
+    while (tmp !== null) {
       if (tmp.key === key) {
         return true;
       }
@@ -66,7 +66,7 @@ export default class Bucket {
   }
   containsValue(value) {
     let tmp = this.headNode;
-    while (tmp.nextNode !== null) {
+    while (tmp !== null) {
       if (tmp.value === value) {
         return true;
       }
@@ -76,7 +76,7 @@ export default class Bucket {
   }
   containsKeyValue(key, value) {
     let tmp = this.headNode;
-    while (tmp.nextNode !== null) {
+    while (tmp !== null) {
       if (tmp.key === key && tmp.value === value) {
         return true;
       }
@@ -87,9 +87,21 @@ export default class Bucket {
   findKey(key) {
     let tmp = this.headNode;
     let index = 0;
-    while (tmp.nextNode !== null) {
+    while (tmp !== null) {
       if (tmp.key === key) {
         return index;
+      }
+      index++;
+      tmp = tmp.nextNode;
+    }
+    return null;
+  }
+  findValueByKey(key) {
+    let tmp = this.headNode;
+    let index = 0;
+    while (tmp !== null) {
+      if (tmp.key === key) {
+        return tmp.value;
       }
       index++;
       tmp = tmp.nextNode;
@@ -99,7 +111,7 @@ export default class Bucket {
   findValue(value) {
     let tmp = this.headNode;
     let index = 0;
-    while (tmp.nextNode !== null) {
+    while (tmp !== null) {
       if (tmp.value === value) {
         return index;
       }
@@ -111,7 +123,7 @@ export default class Bucket {
   findKeyValue(key, value) {
     let tmp = this.headNode;
     let index = 0;
-    while (tmp.nextNode !== null) {
+    while (tmp !== null) {
       if (tmp.key === key && tmp.value === value) {
         return index;
       }
@@ -147,6 +159,10 @@ export default class Bucket {
   removeAt(index) {
     if (index < 0 || index >= this.size()) {
       return "Index out of bounds";
+    }
+    if (index === 0) {
+      this.headNode = this.headNode.nextNode;
+      return;
     }
     let tmp = this.headNode;
     for (let i = 0; i < index - 1; i++) {

@@ -25,6 +25,33 @@ export default class HashMap {
       this.buckets[hashCode].append(key, value);
     }
   }
+  get(key) {
+    const hashCode = this.hash(key);
+    if (this.buckets[hashCode] === null) {
+      return null;
+    } else if (this.buckets[hashCode].containsKey(key)) {
+      return this.buckets[hashCode].findValueByKey(key);
+    } else {
+      return null;
+    }
+  }
+  has(key) {
+    const hashCode = this.hash(key);
+    if (this.buckets[hashCode] === null) {
+      return false;
+    } else {
+      return this.buckets[hashCode].containsKey(key);
+    }
+  }
+  remove(key) {
+    const hashCode = this.hash(key);
+    if (this.buckets[hashCode] === null) {
+      return null;
+    } else {
+      const index = this.buckets[hashCode].findKey(key);
+      this.buckets[hashCode].removeAt(index);
+    }
+  }
 }
 
 // intermediary test
@@ -42,3 +69,14 @@ test.set("jacket", "blue");
 test.set("kite", "pink");
 test.set("lion", "golden");
 console.log(JSON.stringify(test, null, 2));
+console.log(`Find a color of the lion: ${test.get("lion")}`);
+console.log(
+  `The hashmap ${
+    test.has("ice cream") ? "contains" : "doesn't contain"
+  } ice cream`
+);
+console.log(
+  `The hashmap ${test.has("car") ? "contains" : "doesn't contain"} a car`
+);
+test.remove("frog");
+console.log(`Removed Frog, lets try to find it: ${test.get("frog")}`);
