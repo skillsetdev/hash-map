@@ -52,6 +52,18 @@ export default class HashMap {
       this.buckets[hashCode].removeAt(index);
     }
   }
+  length() {
+    let index = 0;
+    this.buckets.forEach((bucket) => {
+      if (bucket !== null) {
+        index += bucket.size();
+      }
+    });
+    return index;
+  }
+  clear() {
+    this.buckets = this.buckets.map(() => null);
+  }
 }
 
 // intermediary test
@@ -78,5 +90,9 @@ console.log(
 console.log(
   `The hashmap ${test.has("car") ? "contains" : "doesn't contain"} a car`
 );
+console.log(`Map size: ${test.length()}`);
 test.remove("frog");
 console.log(`Removed Frog, lets try to find it: ${test.get("frog")}`);
+console.log(`Map size: ${test.length()}`);
+test.clear();
+console.log(`Map cleared. Map size: ${test.length()}`);
