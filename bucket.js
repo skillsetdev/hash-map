@@ -136,7 +136,9 @@ export default class Bucket {
     let tmp = this.headNode;
     var resultString = "";
     while (tmp !== null) {
-      resultString += ` (${tmp.value}) ${tmp.nextNode !== null ? "->" : ""}`;
+      resultString += ` (${tmp.key}: ${tmp.value}) ${
+        tmp.nextNode !== null ? "->" : ""
+      }`;
       tmp = tmp.nextNode;
     }
     return resultString;
@@ -169,5 +171,33 @@ export default class Bucket {
       tmp = tmp.nextNode;
     }
     tmp.nextNode = tmp.nextNode.nextNode;
+  }
+  keys() {
+    let tmp = this.headNode;
+    let keysArr = [];
+    while (tmp !== null) {
+      keysArr.push(tmp.key);
+      tmp = tmp.nextNode;
+    }
+    return keysArr;
+  }
+  values() {
+    let tmp = this.headNode;
+    let valuesArr = [];
+    while (tmp !== null) {
+      valuesArr.push(tmp.value);
+      tmp = tmp.nextNode;
+    }
+    return valuesArr;
+  }
+  keyValuePairs() {
+    let tmp = this.headNode;
+    let keyValueArr = [];
+    while (tmp !== null) {
+      const subArr = [tmp.key, tmp.value];
+      keyValueArr.push(subArr);
+      tmp = tmp.nextNode;
+    }
+    return keyValueArr;
   }
 }
